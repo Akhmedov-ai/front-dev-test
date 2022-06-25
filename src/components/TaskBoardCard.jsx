@@ -99,4 +99,9 @@ const styles = StyleSheet.create({
         fontWeight: '500',
         color: '#414644',
     },
+//    ':nth-child(1n) > :first-child': {
+//             borderRadius: '8px 0 0 8px'
+//         },
+//
+//
 })

@@ -4,7 +4,6 @@ import { typesCheck } from '../../utils/types'
 
 export default function Status({ data }) {
     const st = typesCheck(data.status) || []
-
     return (
         <span style={{ color: st.color, background: st.linearBg }} className={css(styles.tag)}>
             {st.name}

@@ -7,60 +7,86 @@ import Add from '../static/add.svg'
 import { applicationTypes } from '../utils/types'
 
 export function TaskBoardList({ items, index }) {
-    let h = 484
-
     const getListStyle = (isDraggingOver) => {
-        if (items.length >= 3) {
-            h = 484 + ((items.length - 3) * 144)
-            h = isDraggingOver ? h + 144 : h
-        }
+        let h = 445
+        let oY = {}
 
-        return { height: h }
+        if (items.length >= 3) {
+            h = 445 + ((items.length - (isDraggingOver ? 3 : 4)) * 144)
+            oY = { overflowY: 'scroll' }
+        } if (items.length === 3) {
+            h = 445
+        }
+        return { height: h, ...oY }
     }
 
     return (
-        <Droppable droppableId={`${index}`}>
-            {(provided, snapshot) => (
-                <div
-                    className={css(styles.list)}
-                    style={getListStyle(snapshot.isDraggingOver)}>
-                    <div
-                        className={css(styles.caption)}>
-                        <h3 className={css(styles.title)}>{applicationTypes[index]} • {items.length}</h3>
-                    </div>
+        <div className={css(styles.cont)}>
+            <div className={css(styles.caption)}>
+                <h3 className={css(styles.title)}>{applicationTypes[index]} • {items.length}</h3>
+            </div>
 
-                    <div style={{ height: '100%' }} {...provided.droppableProps} ref={provided.innerRef}>
-                        {!isEmpty(items) ? items.map((item, ind) => (
-                            <TaskBoardCard key={item.id} index={ind} data={item} />
-                        )) : (
-                            <div className={css(styles.wrap)}>
-                                <img src={Add} alt="#add" />
+            <Droppable droppableId={`${index}`}>
+                {(provided, snapshot) => (
+                    <div className={css(styles.list)} style={getListStyle(snapshot.isDraggingOver)}>
+                        <div
+                            ref={provided.innerRef}
+                            {...provided.droppableProps}
+                            className={css(styles.wrap)}>
+                            {!isEmpty(items) ? (
+                                <>
+                                    {items.map((item, ind) => (
+                                        <TaskBoardCard key={item.id} index={ind} data={item} />
+                                    ))}
 
-                                <h3 className={css(styles.noCard)}>
-                                    Если есть подходящие заявки, перетащите их сюда 🤓
-                                </h3>
-                            </div>
-                        )}
-                        {provided.placeholder}
+                                    {items.length > 3 ? (
+                                        <div style={{ height: 0.1, width: '100%' }} />
+                                    ) : null}
+                                </>
+                            ) : (
+                                <div className={css(styles.noCardWrap)}>
+                                    <img src={Add} alt="#add " />
+
+                                    <h3 className={css(styles.noCard)}>
+                                        Если есть подходящие заявки, перетащите их сюда 🤓
+                                    </h3>
+                                </div>
+                            )}
+                            {provided.placeholder}
+                        </div>
                     </div>
-                </div>
-            )}
-        </Droppable>
+                )}
+            </Droppable>
+        </div>
     )
 }
 
 const styles = StyleSheet.create({
-    list: {
+    cont: {
         width: 276,
         marginRight: '1.625rem',
+    },
+    wrap: {
+        height: '100%',
+        paddingTop: 12,
+        ':nth-child(1n) > :first-child': {
+            marginTop: 0,
+        },
+    },
+    list: {
         border: '1px solid #c9d2ce',
-        borderRadius: 4,
+        borderTopWidth: 0,
+        borderBottomRightRadius: 4,
+        borderBottomLeftRadius: 4,
+        '::-webkit-scrollbar': {
+            display: 'none',
+        },
     },
     caption: {
         backgroundColor: '#f2faf6',
         borderTopRightRadius: 4,
         borderTopLeftRadius: 4,
-        borderBottom: '1px solid #c9d2ce',
+        border: '1px solid #c9d2ce',
         height: 39,
         padding: 10,
         zIndex: 5,
@@ -70,7 +96,7 @@ const styles = StyleSheet.create({
         fontWeight: 500,
         color: '#414644',
     },
-    wrap: {
+    noCardWrap: {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',

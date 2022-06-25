@@ -43,10 +43,12 @@ export function TaskBoard() {
 
     return (
         <div className={css(styles.cont)}>
+
             <DragDropContext
                 onDragEnd={onDragEnd}>
                 <div style={{ position: 'relative', display: 'flex', justifyContent: 'space-evenly' }}>
                     {elements.map((i, ind) => (
+                        // eslint-disable-next-line react/no-array-index-key
                         <TaskBoardList items={i} key={ind} index={ind} />
                     ))}
                 </div>
