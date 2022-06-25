@@ -13,8 +13,7 @@ export function TaskBoardCard({ data, index }) {
                     className={css(styles.wrap)}
                     ref={prov.innerRef}
                     {...prov.draggableProps}
-                    {...prov.dragHandleProps}
-                >
+                    {...prov.dragHandleProps}>
                     <div style={{ width: '83%' }}>
                         <h3 className={css(styles.pos)}>{data.position}</h3>
 
@@ -26,8 +25,7 @@ export function TaskBoardCard({ data, index }) {
                             <Status data={data} />
 
                             <span className={css(styles.st)}>
-                                <img src={group} alt="#group" />
-                        &nbsp;
+                                <img src={group} alt="#group" /> &nbsp;
                                 {data.num}
                             </span>
 
@@ -98,10 +96,5 @@ const styles = StyleSheet.create({
         fontSize: 12,
         fontWeight: '500',
         color: '#414644',
-    },
-//    ':nth-child(1n) > :first-child': {
-//             borderRadius: '8px 0 0 8px'
-//         },
-//
-//
+    }
 })

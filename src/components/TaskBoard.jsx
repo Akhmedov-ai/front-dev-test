@@ -43,7 +43,6 @@ export function TaskBoard() {
 
     return (
         <div className={css(styles.cont)}>
-
             <DragDropContext
                 onDragEnd={onDragEnd}>
                 <div style={{ position: 'relative', display: 'flex', justifyContent: 'space-evenly' }}>

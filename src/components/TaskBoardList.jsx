@@ -17,6 +17,7 @@ export function TaskBoardList({ items, index }) {
         } if (items.length === 3) {
             h = 445
         }
+
         return { height: h, ...oY }
     }
 
@@ -34,7 +35,7 @@ export function TaskBoardList({ items, index }) {
                             {...provided.droppableProps}
                             className={css(styles.wrap)}>
                             {!isEmpty(items) ? (
-                                <>
+                                <React.Fragment>
                                     {items.map((item, ind) => (
                                         <TaskBoardCard key={item.id} index={ind} data={item} />
                                     ))}
@@ -42,7 +43,7 @@ export function TaskBoardList({ items, index }) {
                                     {items.length > 3 ? (
                                         <div style={{ height: 0.1, width: '100%' }} />
                                     ) : null}
-                                </>
+                                </React.Fragment>
                             ) : (
                                 <div className={css(styles.noCardWrap)}>
                                     <img src={Add} alt="#add " />
